@@ -1,3 +1,3 @@
 # WaveformEstimationUsingSchurComplement
 ## introduction
-  The premise of the project is to create a method to estimate the phase, amplitude, offset, and frequency based on a noisy signal.
+The premise of the project is to create a method to estimate the phase, amplitude, offset, and frequency based on data from a noisy signal. The main method for estimating the signal is the least squares method. This is a robust method for estimating the amplitude, phase and offset of the signal when the frequency of the signal is known and the signal has introduced noise into the other variables of the signal. This method however is only useful if the frequency is known with great accuracy. when the frequency has noise and variation in itself, the estimations from the method become significantly less accurate. This is where the shur complement can help take into the account the error.
