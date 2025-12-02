@@ -4,4 +4,4 @@ The premise of the project is to create a method to estimate the phase, amplitud
 
 ## Methodology
 ### Least Squares Method
-Any signal with a single sinusoidal component can be discribed with an aplitude, frequency, phase, and offset and can be written in the form$x(t) = A\sin(\omega_0t + \phi) + k$
+Any signal with a single sinusoidal component can be discribed with an aplitude, frequency, phase, and offset and can be written in the form $x(t) = A\sin(\omega_0t + \phi) + k$
