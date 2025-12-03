@@ -13,11 +13,11 @@ r(t_n) = A \sin(\omega_0 t_n + \phi) + k
 $$
 
 When a signal is noisy, the least-squares method should be used to estimate the 
-signal components \(A\), \(\phi\), and \(k\). To find the parameters, the error 
+signal components $A$, $\phi$, and $k$. To find the parameters, the error 
 must be defined. The error can be written as
 
 $$
 e(t_n) = s(n) - r(t_n)
 $$
 
-where \(s(n)\) is the measured voltage.
+where $s(n)$ is the measured voltage.
