@@ -6,6 +6,4 @@ The materials used for this project include a physical and software component. T
 ## Methodology
 ### Least Squares Method
 Any signal with a single sinusoidal component can be discribed with an aplitude, frequency, phase, and offset and can be written in the form 
-$$
-\vec{r}(t_n) = A\sin(\omega_0t + \phi) + k
-$$. When a signal is noisy the least squares method should be used to estimate the signal components, A, $\phi$, and k. to find the parameters the error has to be estemated. The error can be written as the form $$\vec{e}(t) = \vec{s}(n) - \vec{r}(t_n)$$ where $\vec{s}(n)$ is the measured voltages.
+$\vec{r}\(t_n\) = A\sin(\omega_0t + \phi) + k$. When a signal is noisy the least squares method should be used to estimate the signal components, A, $\phi$, and k. to find the parameters the error has to be estemated. The error can be written as the form $$\vec{e}(t) = \vec{s}(n) - \vec{r}(t_n)$$ where $\vec{s}(n)$ is the measured voltages.
