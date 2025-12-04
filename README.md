@@ -26,10 +26,10 @@ $$
 [E] = \begin{bmatrix} \sin(\omega_0t_n) \\ \cos(\omega_0t_n) \\ 1 \end{bmatrix}
 $$
 
-and the $p$ vector written of the form
+and the $\vec{p}$ vector written of the form
 
 $$
-\begin{bmatrix} \alpha \\\\ \beta \\\\ k \end{bmatrix}
+\vec{p} = \begin{bmatrix} \alpha \\\\ \beta \\\\ k \end{bmatrix}
 $$
 
 where $\alpha = A \cos(\phi)$, $\beta = A \sin(\phi)$, and $k$ is the signal offset
