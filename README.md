@@ -23,7 +23,7 @@ $$
 where $s(n)$ is the measured voltage. $r(t_n) = [E] \cdot p$, where the matrix $[E]$ can be defined as 
 
 $$
-[E] = \begin{bmatrix} \sin(\omega_0t_n) \\ \cos(\omega_0t_n) \\ 1 \end{bmatrix}
+[E] = \begin{bmatrix} \sin(\omega_0t_n) & \cos(\omega_0t_n) & 1 \end{bmatrix}
 $$
 
 and the $p$ vector written of the form
