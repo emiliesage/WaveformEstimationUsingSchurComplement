@@ -12,31 +12,15 @@ tn = (0:n_samples-1) / f_sample;
 
 
 n_simulations = 1e3;
-##
-##% distribution amplitude
-##A_signal_mu = 1;
-##A_signal_std = 0.0;
-##
-##% distribution frequency
-##fsignal_mu = 125e3;
-##fsignal_std = 0.005*125e3;
-##
-##% distribution phase
-##phi_mu = 0.0 ;
-##phi_std = pi/2;
-##
-##% distribution offset
-##c_mu = 0.0 ;
-##c_std = 0.5;
-##
-##% noise
-##noise_mu = 0.0 ;
-##noise_std = 0.1 ;
+
+% noise
+%noise_mu = 0.0 ;
+%noise_std = 0.1 ;
 
 A_signal_mu = 1.0;   A_signal_std = 0.1;
-phi_mu = 0.0;        phi_std = pi/8;
+phi_mu = 0.0;        phi_std = pi/4;
 c_mu = 0.0;          c_std = 0.1;
-fsignal_mu = 125e3;  fsignal_std = 0.01 * 125e3; % 125 Hz
+fsignal_mu = 125e3;  fsignal_std = 0.005 * 125e3; % 125 Hz
 noise_mu = 0.0;      noise_std = 0.1;
 
 A_ref = zeros(n_simulations,1);
@@ -50,8 +34,8 @@ c_estimation = zeros(n_simulations,1);
 fsignal_estimation =  zeros(n_simulations,1);
 
 % distribution frequency
-##fsignal_mu = 125e3;
-##fsignal_std = 0.005 * 125e3;
+%fsignal_mu = 125e3;
+%fsignal_std = 0.005 * 125e3;
 E = [ (sin(w0*tn)).'  (cos(w0*tn)).'  ones(n_samples,1) ] ;
 for ii=1:n_simulations
 
@@ -81,10 +65,10 @@ figure;
 A_error = A_estimation-A_ref;
 plot(A_error)
 
-##A_error_mean = mean(A_error);
-##A_error_std = std(A_error);
-##str_aux = sprintf('mean %e and std %e \n',A_error_mean,A_error_std);
-##title(str_aux)
+%A_error_mean = mean(A_error);
+%A_error_std = std(A_error);
+%str_aux = sprintf('mean %e and std %e \n',A_error_mean,A_error_std);
+%title(str_aux)
 
 x = [A_ref, phi_ref, c_ref, fsignal_ref];
 y = [A_estimation, phi_estimation, c_estimation, fsignal_estimation];
@@ -101,12 +85,12 @@ Sigma_yx = gam(n_params+1:end, 1:n_params);
 Sigma_yy = gam(n_params+1:end, n_params+1:end);
 Sigma_yy_reg = Sigma_yy + 1e-9 * eye(size(Sigma_yy));
 
-##A = 1;
-##phi = pi/4;
-##c = 0.5;
-##f = 125e3;
-##w = 2 * pi * f;
-##
+%A = 1;
+%phi = pi/4;
+%c = 0.5;
+%f = 125e3;
+%w = 2 * pi * f;
+%
 
 A = A_signal_mu + A_signal_std * randn(1,1);
 f = fsignal_mu + fsignal_std * randn(1,1);
