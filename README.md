@@ -26,7 +26,7 @@ $$
 [E] = \begin{bmatrix} \sin(\omega_0t_n) \\ \cos(\omega_0t_n) \\ 1 \end{bmatrix}
 $$
 
-and the $\vec{p}$ vector written of the form
+and the $p$ vector written of the form
 
 $$
 \vec{p} = \begin{bmatrix} \alpha \\\\ \beta \\\\ k \end{bmatrix}
