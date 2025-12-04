@@ -20,7 +20,7 @@ $$
 \vec{e(t_n)} = s(n) - \vec{r(t_n)}
 $$
 
-where $s(n)$ is the measured voltage. $\vec{r(t_n)} = [E] \cdot \vec{p}$, where the matrix $[E]$ can be defined as 
+where $s(n)$ is the measured voltage. $r(t_n) = [E] \cdot \vec{p}$, where the matrix $[E]$ can be defined as 
 
 $$
 [E] = \begin{bmatrix} \sin(\omega_0t_n) \\ \cos(\omega_0t_n) \\ 1 \end{bmatrix}
