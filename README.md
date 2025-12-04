@@ -32,4 +32,10 @@ $$
 \vec{p} = \begin{bmatrix} \alpha \\\\ \beta \\\\ k \end{bmatrix}
 $$
 
-where $\alpha = A \cos(\phi)$, $\beta = A \sin(\phi)$, and $k$ is the signal offset
+where $\alpha = A \cos(\phi)$, $\beta = A \sin(\phi)$, and $k$ is the signal offset. Therefor to reconstruct a noisy signal in this model and find the amplitude, phase and offset of the estimated signal, the vector $p$ can be found by the formula:
+
+$$
+\vec{p} = ([E]^T[E])^{-1}[E]^T \cdot s(n)
+$$
+
+where $s(n)$ is the noisy signal data in the discrete time domain. This results in the $p$ vector shown above that discribes the signal parameters. Then the parameters can be calculated from this vector where $A = \sqrt{\alpha^2 + \beta^2}$, $\phi = \frac{\alpha}{\beta}$, and $k$. These ca then be used to discribe an approximation to the signal from the discrete data.
