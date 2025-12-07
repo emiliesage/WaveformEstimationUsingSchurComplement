@@ -45,7 +45,7 @@ The Schur complement is a linear algebra form that is used in the areas of stati
 The first step to seting up this model is to assume that the datasets are able to be modeled as a gaussian random variable. This means that the multivariant system can be expressed as the equation:
 
 $$
-	\cal{N}_k(\mu,\Sigma) \frac{1}{\sqrt{(2 \pi)^k|\Sigma|}}
+	\cal{N}_k(\mu,\Sigma) \frac{1}{\sqrt{(2 \pi)^k|\Sigma|}}e^{(-\frac{(x - \mu)^T \Sigma^{-1}(x - \mu)}{2})}
 $$
 
 
