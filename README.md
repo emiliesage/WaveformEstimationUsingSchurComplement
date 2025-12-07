@@ -50,7 +50,13 @@ $$
 
 Where $\mu$ is the mean of the multivariant system, $k$ is the number of systems, and $\Sigma$ is the covariance matrix showing the relationship between each variable in the system. so long as the system can be estimated in this way the schur complement method can be used. 
 
-The first step of this process was to run a Monte-Carlo simulation to train the vectors to be used in the Schur complement. A signal was generated for $5 * 10^3$ For one random variable called $X$ the amplitude,
+The first step of this process was to run a Monte-Carlo simulation to train the vectors to be used in the Schur complement. A signal was generated for $5 \cdot 10^3$ simulations to tran the datset. For one random variable called $X$ the amplitude, phase, offset and frequency were calculated with noise and direct values were given for each. This is to be the reference set. Then noise was added to the signal and the least squares approximation was evaluated for this signal. This was stored in the variable $Y$. This is the varied set used as a random variable in the calculation. For frequncy estimation in this reguard, The fast forier transform of the signal was also used in the approximation for use in live data.
+
+Then the two sets were coupled into a random variable 
+
+$$
+z = \bmatrix{x \\\\ y} ~ \cal{N} \pmatrix{\bmatrix{\mu_x \\\\ \mu_y} & \bmatrix{\Sigma_{xx} & \Sigma_{xy} \\\\ \Sigma_{yx} & \Sigma_{yy}}}
+$$
 
 ## Results
 
