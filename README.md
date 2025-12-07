@@ -58,6 +58,12 @@ $$
 z = \begin{bmatrix} x \\\\ y \end{bmatrix} \textasciitilde \cal{N} \begin{pmatrix} \begin{bmatrix}\mu_x \\\\ \mu_y \end{bmatrix} & \begin{bmatrix} \Sigma_{xx} & \Sigma_{xy} \\\\ \Sigma_{yx} & \Sigma_{yy} \end{bmatrix} \end{pmatrix}
 $$
 
+From this random variable we can use schur complement to find the conditional covariance and also the conditional expected value. These are of the form:
+
+$$
+\mu_{x|y} = \mu_x + \Sigma_{xy} \Sigma_{yy}^{-1} (y' - \my_y), ~ \Sigma_{x|y} = \Sigma_{xx} - \Sigma_{xy} \Sigma_{yy}^{-1} \Sigma_{yx}
+$$
+
 ## Results
 
 ![117khz signal](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/blob/main/figures/117khz.png)
