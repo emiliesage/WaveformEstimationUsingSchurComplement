@@ -48,6 +48,9 @@ $$
 	\cal{N}_k(\mu,\Sigma) \frac{1}{\sqrt{(2 \pi)^k|\Sigma|}}e^{(-\frac{(x - \mu)^T \Sigma^{-1}(x - \mu)}{2})}
 $$
 
+Where $\mu$ is the mean of the multivariant system, $k$ is the number of systems, and $\Sigma$ is the covariance matrix showing the relationship between each variable in the system. so long as the system can be estimated in this way the schur complement method can be used. 
+
+The first step of this process was to run a Monte-Carlo simulation to train the vectors to be used in the Schur complement. A signal was generated for $5 * 10^3$ For one random variable called $X$ the amplitude,
 
 ## Results
 
