@@ -5,9 +5,9 @@ f_sample = 2.5e6;
 f_signal = 125e3;
 n_samples = 1024;
 w0 = 2 * pi * f_signal;
-##A = 1;
-##phi = pi/4;
-##k = 0.5;
+% A = 1;
+% phi = pi/4;
+% k = 0.5;
 tn = (0:n_samples-1) / f_sample;
 
 
@@ -20,7 +20,7 @@ n_simulations = 1e3;
 A_signal_mu = 1.0;   A_signal_std = 0.1;
 phi_mu = 0.0;        phi_std = pi/4;
 c_mu = 0.0;          c_std = 0.1;
-fsignal_mu = 125e3;  fsignal_std = 0.005 * 125e3; % 125 Hz
+fsignal_mu = 125e3;  fsignal_std = 0.05 * 125e3; % 125 Hz
 noise_mu = 0.0;      noise_std = 0.1;
 
 A_ref = zeros(n_simulations,1);
@@ -36,7 +36,7 @@ fsignal_estimation =  zeros(n_simulations,1);
 % distribution frequency
 %fsignal_mu = 125e3;
 %fsignal_std = 0.005 * 125e3;
-E = [ (sin(w0*tn)).'  (cos(w0*tn)).'  ones(n_samples,1) ] ;
+E = [ (sin(w0*tn(:)))  (cos(w0*tn(:)))L  ones(n_samples,1) ] ;
 for ii=1:n_simulations
 
     A_ref(ii,1) = A_signal_mu + A_signal_std * randn(1,1);
@@ -107,8 +107,8 @@ p = ( inv(E'*E)*E' ) * signal.' ;
 A_2 = sqrt( p(1)^2 + p(2)^2  );
 phi_2 = atan2( p(2) , p(1) );
 c_2 = p(3);
-y1 = [A_2,phi_2,c_2,125e3]
-rec = muX' + Sigma_xy * inv(Sigma_yy_reg) * (y1' - muY')
+y1 = [A_2,phi_2,c_2,125e3];
+rec = muX' + Sigma_xy * inv(Sigma_yy_reg) * (y1' - muY');
 
 sig_one = A_2 * sin(2*pi*125e3*tn + phi_2) + c_2;
 reconstructed_signal = rec(1)*sin(2*pi*rec(4)*tn + rec(2)) + rec(3);
