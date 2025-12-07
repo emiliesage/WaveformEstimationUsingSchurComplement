@@ -118,7 +118,7 @@ h_sc  = plot(nan,nan,'b-','LineWidth',1.2);
 ylim([-1.5 1.5]);
 xlabel("Time [s]"); ylabel("Voltage [V]");
 title("Raw (red), LS (green), Schur (blue)");
-legend({'raw','LS','Schur'});
+legend('raw','LS','Schur','Location', 'southeast');
 h_freq_text = text(0.02, 0.95, '', 'Units','normalized','FontSize',12,'Color','k','FontWeight','bold');
 
 % keep small history of frequency estimates
@@ -217,9 +217,10 @@ while true
     hist_idx = hist_idx + 1;
     if hist_idx > max_hist, hist_idx = 1; end
     freq_hist(hist_idx) = f_SC / 1e3; % store in kHz
-
-    set(h_freq_text, 'String', sprintf('f_{Schur} = %.3f kHz | f_{FFT} = %.3f kHz | f_s = %.3f MHz', ...
-        f_SC/1e3, f_est_fft/1e3, f_sample_live/1e6));
+    mse_Schur = mean((voltage - sig_SC).^2);
+    mse_QAM = mean((voltage - sig_LS).^2);
+    set(h_freq_text, 'String', sprintf('f_{Schur} = %.3f kHz | f_{QAM}  = %0.3f kHz | error_{Schur} = %0.3f | error_{QAM} = %0.3f', ...
+        f_SC/1e3, f_signal_nom/1e3,mse_Schur,mse_QAM));
 
     drawnow;
 
