@@ -61,7 +61,7 @@ $$
 From this random variable we can use schur complement to find the conditional covariance and also the conditional expected value. These are of the form:
 
 $$
-\mu_{x|y} = \mu_x + \Sigma_{xy} \Sigma_{yy}^{-1} (y' - \my_y), ~ \Sigma_{x|y} = \Sigma_{xx} - \Sigma_{xy} \Sigma_{yy}^{-1} \Sigma_{yx}
+\mu_{x|y} = \mu_x + \Sigma_{xy} \Sigma_{yy}^{-1} (y' - \mu_y), ~ \Sigma_{x|y} = \Sigma_{xx} - \Sigma_{xy} \Sigma_{yy}^{-1} \Sigma_{yx}
 $$
 
 ## Results
