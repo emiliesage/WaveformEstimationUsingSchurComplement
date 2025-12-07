@@ -12,8 +12,7 @@ $$
 r(t_n) = A \sin(\omega_0 t_n + \phi) + k
 $$
 
-When a signal is noisy, the least-squares method should be used to estimate the 
-signal components $A$, $\phi$, and $k$. To find the parameters, the error 
+When a signal is noisy, the linear least-squares sinusoidal method should be used to estimate the signal components $A$, $\phi$, and $k$. To find the parameters, the error 
 must be defined. The error can be written as
 
 $$
