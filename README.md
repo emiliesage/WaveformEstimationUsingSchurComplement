@@ -37,7 +37,17 @@ $$
 \vec{p} = ([E]^T[E])^{-1}[E]^T \cdot s(n)
 $$
 
-where $s(n)$ is the noisy signal data in the discrete time domain. This results in the $p$ vector shown above that discribes the signal parameters. Then the parameters can be calculated from this vector where $A = \sqrt{\alpha^2 + \beta^2}$, $\phi = \frac{\alpha}{\beta}$, and $k$. These can then be used to discribe an approximation to the signal from the discrete data.
+where $s(n)$ is the noisy signal data in the discrete time domain. This results in the $p$ vector shown above that discribes the signal parameters. Then the parameters can be calculated from this vector where $A = \sqrt{\alpha^2 + \beta^2}$, $\phi = \frac{\alpha}{\beta}$, and $k$. These can then be used to discribe an approximation to the signal from the discrete data. This method is very accurate and robust when the frequency of the signal is known and has no variation but when there is variation in the frequency then the estimation of amplitude and phase drops off significantly. This is why the schur complement is useful.
+
+### Schur Complement
+The Schur complement is a linear algebra form that is used in the areas of statistics. In statistical application, the goal of this model is to find the conditional expected value of a specific set of multivariant data in relation to another dataset, taking into account the mean and covariance of the set.
+
+The first step to seting up this model is to assume that the datasets are able to be modeled as a gaussian random variable. This means that the multivariant system can be expressed as the equation:
+
+$$
+	\Nu_k(\mu,\Sigma) \frac{1}{\sqrt{(2 \pi)^k|\Sigma|}}
+$$
+
 
 ## Results
 
