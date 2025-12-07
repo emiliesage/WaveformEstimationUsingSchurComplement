@@ -41,4 +41,4 @@ where $s(n)$ is the noisy signal data in the discrete time domain. This results 
 
 ## Results
 
-![](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/figures/117khz.png)
+![117khz signal](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/blob/main/figures/117khz.png)
