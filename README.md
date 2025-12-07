@@ -55,7 +55,7 @@ The first step of this process was to run a Monte-Carlo simulation to train the 
 Then the two sets were coupled into a random variable 
 
 $$
-z = \begin{bmatrix} x \\\\ y \end{bmatrix} \~ \cal{N} \begin{pmatrix} \begin{bmatrix}\mu_x \\\\ \mu_y \end{bmatrix} & \begin{bmatrix} \Sigma_{xx} & \Sigma_{xy} \\\\ \Sigma_{yx} & \Sigma_{yy} \end{bmatrix} \end{pmatrix}
+z = \begin{bmatrix} x \\\\ y \end{bmatrix} \textasciitilde \cal{N} \begin{pmatrix} \begin{bmatrix}\mu_x \\\\ \mu_y \end{bmatrix} & \begin{bmatrix} \Sigma_{xx} & \Sigma_{xy} \\\\ \Sigma_{yx} & \Sigma_{yy} \end{bmatrix} \end{pmatrix}
 $$
 
 ## Results
