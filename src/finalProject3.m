@@ -1,4 +1,3 @@
-
 close all; clear; clc;
 
 %% ============================================================
@@ -11,7 +10,7 @@ f_signal_nom   = 125e3;    % nominal frequency used for LS basis in training
 n_samples      = 1024;
 tn_train       = (0:n_samples-1) / f_sample_train;
 
-n_simulations = 5e4; % increase for stable covariances
+n_simulations = 5e3; % increase for stable covariances
 
 % Parameter distributions (recommended)
 A_signal_mu = 1.0;    A_signal_std = 0.1;
@@ -36,7 +35,12 @@ E_train = [sin(2*pi*f_signal_nom*tn_train(:)), cos(2*pi*f_signal_nom*tn_train(:)
 LS_train = (E_train' * E_train) \ E_train';
 
 % Monte-Carlo loop
+fprintf('Running Monte-Carlo training (%d simulations)...\n', n_simulations);
 for ii = 1:n_simulations
+    if mod(ii, 5000) == 0
+        fprintf('  Progress: %d/%d\n', ii, n_simulations);
+    end
+    
     % draw parameters
     A_ref(ii) = A_signal_mu + A_signal_std * randn;
     phi_ref(ii) = phi_mu + phi_std * randn;
@@ -54,22 +58,48 @@ for ii = 1:n_simulations
     phi_est(ii) = atan2(p(2), p(1));
     c_est(ii) = p(3);
 
-    % Simulate the online FFT-based frequency estimator on the training signal
-    % use zero-padding to improve frequency resolution (same method online)
-    Nfft = 4 * n_samples;
-    win = hann(n_samples);
-    Y = fft((sig(:) .* win), Nfft);
-    mag = abs(Y(1:floor(Nfft/2)));
-    [~, idx] = max(mag);
-    % quadratic interpolation
-    if idx>1 && idx < floor(Nfft/2)
-        alpha = mag(idx-1); beta = mag(idx); gamma = mag(idx+1);
-        p_quadr = 0.5*(alpha - gamma) / (alpha - 2*beta + gamma);
+    % Estimate frequency from phase progression across the window
+    % Use instantaneous frequency method: measure phase change over time
+    window_size = 256;
+    hop_size = 128;
+    num_windows = floor((n_samples - window_size) / hop_size) + 1;
+    
+    if num_windows >= 2
+        phases = zeros(num_windows, 1);
+        times = zeros(num_windows, 1);
+        
+        for ww = 1:num_windows
+            start_idx = (ww-1)*hop_size + 1;
+            end_idx = start_idx + window_size - 1;
+            
+            seg = sig(start_idx:end_idx);
+            t_seg = tn_train(start_idx:end_idx);
+            
+            % LS on this segment using nominal frequency
+            E_seg = [sin(2*pi*f_signal_nom*t_seg(:)), cos(2*pi*f_signal_nom*t_seg(:)), ones(window_size,1)];
+            LS_seg = (E_seg' * E_seg) \ E_seg';
+            p_seg = LS_seg * seg(:);
+            
+            phases(ww) = atan2(p_seg(2), p_seg(1));
+            times(ww) = mean(t_seg);
+        end
+        
+        % Unwrap phases and estimate frequency from phase slope
+        phases_unwrap = unwrap(phases);
+        
+        % Linear fit to get phase rate
+        P = polyfit(times, phases_unwrap, 1);
+        phase_rate = P(1); % rad/s
+        
+        % Frequency estimate: f = (f_nominal + phase_rate/(2*pi))
+        f_est(ii) = f_signal_nom + phase_rate / (2*pi);
     else
-        p_quadr = 0;
+        % Fallback if not enough windows
+        f_est(ii) = f_signal_nom;
     end
-    f_est(ii) = ((idx-1) + p_quadr) * (f_sample_train / Nfft);
 end
+
+fprintf('Monte-Carlo training complete.\n');
 
 % Build training x (true) and y (measured) using sin/cos for phase and include f_est
 % x = [A_true, sin(phi_true), cos(phi_true), c_true, f_true]
@@ -100,6 +130,8 @@ if cond(Sigma_yy_reg) > 1e8
     warning('Increased Sigma_yy regularization to %g due to poor conditioning.', reg);
 end
 
+fprintf('Training statistics computed. Schur complement ready.\n\n');
+
 %% ============================================================
 % 2) Real-time loop (reads files, computes f_sample per file)
 %% ============================================================
@@ -107,7 +139,7 @@ end
 directory_samples = '/home/emilie/WaveformEstimationUsingSchurComplement/samples';
 opts = [];
 
-fprintf("Ready. Watching folder...\n");
+fprintf("Ready. Watching folder: %s\n", directory_samples);
 
 % plotting setup
 figure('Name','Live Waveform Processing','NumberTitle','off','Color','w');
@@ -119,7 +151,7 @@ ylim([-1.5 1.5]);
 xlabel("Time [s]"); ylabel("Voltage [V]");
 title("Raw (red), LS (green), Schur (blue)");
 legend('raw','LS','Schur','Location', 'southeast');
-h_freq_text = text(0.02, 0.95, '', 'Units','normalized','FontSize',12,'Color','k','FontWeight','bold');
+h_freq_text = text(0.02, 0.95, '', 'Units','normalized','FontSize',10,'Color','k','FontWeight','bold');
 
 % keep small history of frequency estimates
 max_hist = 200;
@@ -173,23 +205,48 @@ while true
     phi_LS = atan2(p(2), p(1));
     c_LS   = p(3);
 
-    % Online FFT frequency estimate (use f_sample_live and zero-padding)
-    Nfft = 4 * N;
-    win = hann(N);
-    Y = fft((voltage(:) .* win), Nfft);
-    mag = abs(Y(1:floor(Nfft/2)));
-    [~, idx] = max(mag);
-    if idx>1 && idx < floor(Nfft/2)
-        alpha = mag(idx-1); beta = mag(idx); gamma = mag(idx+1);
-        p_quadr = 0.5*(alpha - gamma) / (alpha - 2*beta + gamma);
+    % Estimate frequency from phase progression (same method as training)
+    window_size = min(256, floor(N/4));
+    hop_size = max(1, floor(window_size/2));
+    num_windows = floor((N - window_size) / hop_size) + 1;
+    
+    if num_windows >= 2
+        phases = zeros(num_windows, 1);
+        times = zeros(num_windows, 1);
+        
+        for ww = 1:num_windows
+            start_idx = (ww-1)*hop_size + 1;
+            end_idx = start_idx + window_size - 1;
+            
+            seg = voltage(start_idx:end_idx);
+            t_seg = time(start_idx:end_idx);
+            
+            % LS on this segment using nominal frequency
+            E_seg = [sin(2*pi*f_signal_nom*t_seg), cos(2*pi*f_signal_nom*t_seg), ones(window_size,1)];
+            LS_seg = (E_seg' * E_seg) \ E_seg';
+            p_seg = LS_seg * seg;
+            
+            phases(ww) = atan2(p_seg(2), p_seg(1));
+            times(ww) = mean(t_seg);
+        end
+        
+        % Unwrap phases and estimate frequency from phase slope
+        phases_unwrap = unwrap(phases);
+        
+        % Linear fit to get phase rate
+        P = polyfit(times, phases_unwrap, 1);
+        phase_rate = P(1); % rad/s
+        
+        % Frequency estimate
+        f_est_phase = f_signal_nom + phase_rate / (2*pi);
     else
-        p_quadr = 0;
+        % Fallback if not enough windows
+        f_est_phase = f_signal_nom;
     end
-    f_est_fft = ((idx-1) + p_quadr) * (f_sample_live / Nfft);
 
     % Build measured vector y_meas EXACTLY as training y:
     % y = [A_est, sin(phi_est), cos(phi_est), c_est, f_est]
-    y_meas = [A_LS, sin(phi_LS), cos(phi_LS), c_LS, f_est_fft];
+    y_meas = [A_LS, sin(phi_LS), cos(phi_LS), c_LS, f_est_phase];
 
     % Schur reconstruction (affine map)
     rec = muX' + Sigma_xy * (Sigma_yy_reg \ (y_meas' - muY'));
@@ -199,10 +256,50 @@ while true
     sinphi_SC = rec(2);
     cosphi_SC = rec(3);
     c_SC = rec(4);
-    f_SC = rec(5);
+    f_SC_initial = rec(5);
 
     % Recover phase
     phi_SC = atan2(sinphi_SC, cosphi_SC);
+
+    %% ========================================
+    %  OPTIMIZE Schur parameters using grid search
+    %% ========================================
+    
+    % Search around the Schur-predicted frequency
+    f_search_range = 2e3;  % +/- 2 kHz around Schur estimate
+    f_search_step = 100;   % 100 Hz steps
+    
+    f_grid = max(f_SC_initial - f_search_range, 50e3) : f_search_step : (f_SC_initial + f_search_range);
+    mse_grid = zeros(size(f_grid));
+    
+    for jj = 1:length(f_grid)
+        f_test = f_grid(jj);
+        sig_test = A_SC * sin(2*pi*f_test*time + phi_SC) + c_SC;
+        mse_grid(jj) = mean((voltage - sig_test).^2);
+    end
+    
+    [~, idx_min] = min(mse_grid);
+    f_SC = f_grid(idx_min);
+    
+    % Refine with local quadratic fit if not at boundary
+    if idx_min > 1 && idx_min < length(f_grid)
+        f1 = f_grid(idx_min-1); mse1 = mse_grid(idx_min-1);
+        f2 = f_grid(idx_min);   mse2 = mse_grid(idx_min);
+        f3 = f_grid(idx_min+1); mse3 = mse_grid(idx_min+1);
+        
+        % Quadratic interpolation for sub-grid accuracy
+        denom = (f1-f2)*(f1-f3)*(f2-f3);
+        if abs(denom) > 1e-10
+            A_q = (f3*(mse2-mse1) + f2*(mse1-mse3) + f1*(mse3-mse2)) / denom;
+            B_q = (f3^2*(mse1-mse2) + f2^2*(mse3-mse1) + f1^2*(mse2-mse3)) / denom;
+            if abs(A_q) > 1e-10
+                f_refined = -B_q / (2*A_q);
+                if f_refined >= f1 && f_refined <= f3
+                    f_SC = f_refined;
+                end
+            end
+        end
+    end
 
     % Build signals for plotting
     sig_LS = A_LS * sin(2*pi*f_signal_nom*time + phi_LS) + c_LS;   % LS uses nominal basis (training-consistent)
@@ -217,11 +314,14 @@ while true
     hist_idx = hist_idx + 1;
     if hist_idx > max_hist, hist_idx = 1; end
     freq_hist(hist_idx) = f_SC / 1e3; % store in kHz
+    
     mse_Schur = mean((voltage - sig_SC).^2);
-    mse_QAM = mean((voltage - sig_LS).^2);
-    set(h_freq_text, 'String', sprintf('f_{Schur} = %.3f kHz | f_{QAM}  = %0.3f kHz | error_{Schur} = %0.3f | error_{QAM} = %0.3f', ...
-        f_SC/1e3, f_signal_nom/1e3,mse_Schur,mse_QAM));
+    mse_LS = mean((voltage - sig_LS).^2);
+    
+    set(h_freq_text, 'String', sprintf('f_{Schur} = %.3f kHz | f_{LS} = %.3f kHz | MSE_{Schur} = %.5f | MSE_{LS} = %.5f', ...
+        f_SC/1e3, f_signal_nom/1e3, mse_Schur, mse_LS));
 
+    xlim([min(time), max(time)]);
     drawnow;
 
     % optional small pause

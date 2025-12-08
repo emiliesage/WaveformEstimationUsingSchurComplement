@@ -36,7 +36,7 @@ fsignal_estimation =  zeros(n_simulations,1);
 % distribution frequency
 %fsignal_mu = 125e3;
 %fsignal_std = 0.005 * 125e3;
-E = [ (sin(w0*tn(:)))  (cos(w0*tn(:)))L  ones(n_samples,1) ] ;
+E = [ (sin(w0*tn.'))  (cos(w0*tn.'))  ones(n_samples,1) ] ;
 for ii=1:n_simulations
 
     A_ref(ii,1) = A_signal_mu + A_signal_std * randn(1,1);
