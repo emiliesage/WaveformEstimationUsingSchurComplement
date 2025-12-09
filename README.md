@@ -58,13 +58,27 @@ $$
 z = \begin{bmatrix} x \\\\ y \end{bmatrix} \textasciitilde \cal{N} \begin{pmatrix} \begin{bmatrix}\mu_x \\\\ \mu_y \end{bmatrix} & \begin{bmatrix} \Sigma_{xx} & \Sigma_{xy} \\\\ \Sigma_{yx} & \Sigma_{yy} \end{bmatrix} \end{pmatrix}
 $$
 
-From this random variable we can use schur complement to find the conditional covariance and also the conditional expected value. These are of the form:
+From this random variable we can use schur complement to find the conditional covariance and also the conditional expected value. These are of the form [1]:
 
 $$
 \mu_{x|y} = \mu_x + \Sigma_{xy} \Sigma_{yy}^{-1} (y' - \mu_y), ~ \Sigma_{x|y} = \Sigma_{xx} - \Sigma_{xy} \Sigma_{yy}^{-1} \Sigma_{yx}
 $$
 
-In this model we use the 
+To derive the formula the conditional covariance $\Sigma_{x|y}$ naturally arives through taking the schur complement of the joint covariance matrix. The following derivation is the completing the square method to derive the conditional expected value $\mu_{x|y}$.
+
+The conditional joint density can be written of the form:
+
+$$
+	p(x,y) \aplha exp(-\frac{1}{2} \begin{pmatrix}z \\\\ d \end{pmatrix}^T \Sigma^{-1} \begin{pmatrix}z \\\\ d \end{pmatrix})
+$$
+
+where the variables are:
+
+$$
+
+$$
+
+
 ## Results
 
 ![118khz signal](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/blob/main/figures/118khz.png)
