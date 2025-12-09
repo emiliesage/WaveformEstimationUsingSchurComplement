@@ -105,11 +105,11 @@ $$
 We use this formula in conjunction with mone-carlo training fro the vectors $x$ and $y$ to approximate a better value for the Least Squares method
 
 ### Process for Execution of the Methods
-The first step to executing the method in code was to train the model. This included a simulation to create the variables $x$ and $y$ where $x$ is the real amplitude, phase, offset and frequency of the simulated signals, and $y$ was the estimated values given the least squares method. noise was introduced in the frequency, amplitude, phase and offset as well as general noise in the system during the training. once the random variables were gathered, the covariance matrix and means were calculated from the concatanated signal $z$. Then simulations were run with more least squares approximations and the modification with the schur complement and metrics were devised to compare the two methods. The results of the expirement will be discussed in the following section. 
+The first step to executing the method in code was to train the model. This included a simulation to create the variables $x$ and $y$ where $x$ is the real amplitude, phase, offset and frequency of the simulated signals, and $y$ was the estimated values given the least squares method. noise was introduced in the frequency, amplitude, phase and offset as well as general noise in the system during the training. once the random variables were gathered, the covariance matrix and means were calculated from the concatanated signal $z$. Then simulations were run with more least squares approximations and the modification with the schur complement and metrics were devised to compare the two methods. There was also code to compare these methods in with live data from a function generator with noise and an ocilloscope The results of the expirement will be discussed in the following section. 
 ## Results
+First results of note are those of the simulations. Below are graphs of the metrics used to compare the two systems:
 
-
-
+![signal metrics](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/blob/main/figures/TraininsStatistics.png) 
 
 ## Conclusion
 
