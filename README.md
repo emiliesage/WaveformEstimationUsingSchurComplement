@@ -127,8 +127,10 @@ Finally the live estimation took place. The live estimation origionally showed n
 
 ![132khz signal](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/blob/main/figures/132khz.png)
 
-## Conclusion
+Once again the true signal is shown in red, the least squares estimation shown in green, and the schur complement reconstruction is shown in blue. with the correct signal of 125khz both estimation methods showed accurate results but with even less than 5% error in the frequency the error in the least squares method was greater than .3 and the error for the schur complement maintained a value under 0.01. These results show significant improvement in the method used.
 
+## Conclusion
+From the data it is reasonable to conclude that the schur complement reconstruction can improve the results of the least squares method when approximating and reconstructing the noisy signal. The values given in the statistical analysis show a significant error difference in the two methods and shows a greated accuracy in the the schur complement reconstruction. This result can be used in sittuations where accuracy and precision is needed without a known frequency such as fine tuning motor adjustment, and signal generation. 
 ## References
 
 [1] Santos, Talles, DEVELOPMENT AND USE OF ANATOMICAL AND
