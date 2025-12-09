@@ -1,4 +1,5 @@
 close all; clear; clc;
+%Chat Gpt was used to find an optimization method to reduce error and get rid of negative coupling
 
 %% ============================================================
 % 1) Monte-Carlo training
