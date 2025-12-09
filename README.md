@@ -4,7 +4,7 @@ The premise of the project is to create a method to estimate the phase, amplitud
 ## Materials
 The materials used for this project include a physical and software component. The saoftware used in this project is Matlab, or in place of that, Octave, and Waveforms. The hardware used for this project is a Rhode Schwarz 4400 ociliscope, for the function generator, and an AD2 microcontroller with ADC (Analog to Digital Converter).
 ## Methodology
-### Least Squares Method
+### Least Squares Method with Know Frequency
 Any signal with a single sinusoidal component can be described using an amplitude, 
 frequency, phase, and offset, and can be written in the form [2]
 
@@ -90,6 +90,19 @@ $$
 	p(x|y) ~ \alpha ~ exp(\frac{1}{2}(z + M^{-1}Nd)^T M(z + M^{-1}Nd)) \times (constant in y)
 $$
 
+from this we can get
+
+$$
+	x - \mu_x = -M^{-1}N(y - \mu_y)
+$$
+
+Pligging in the formula recieved in the schur complement of the covariance matrix, we com up with the form given in the previous section.
+
+$$
+	\mu_{x|y} = \mu_x + \Sigma_{xy} \Sigma_{yy}^{-1} (y' - \mu_y)
+$$
+
+We use this formula in conjunction with mone-carlo training fro the vectors $x$ and $y$ to approximate a better value for the Least Squares method
 ## Results
 
 ![118khz signal](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/blob/main/figures/118khz.png)
