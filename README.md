@@ -6,7 +6,7 @@ The materials used for this project include a physical and software component. T
 ## Methodology
 ### Least Squares Method
 Any signal with a single sinusoidal component can be described using an amplitude, 
-frequency, phase, and offset, and can be written in the form
+frequency, phase, and offset, and can be written in the form [2]
 
 $$
 r(t_n) = A \sin(\omega_0 t_n + \phi) + k
@@ -64,6 +64,18 @@ $$
 \mu_{x|y} = \mu_x + \Sigma_{xy} \Sigma_{yy}^{-1} (y' - \mu_y), ~ \Sigma_{x|y} = \Sigma_{xx} - \Sigma_{xy} \Sigma_{yy}^{-1} \Sigma_{yx}
 $$
 
+In this model we use the 
 ## Results
 
-![117khz signal](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/blob/main/figures/117khz.png)
+![118khz signal](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/blob/main/figures/118khz.png)
+
+## Conclusion
+
+## References
+
+[1] Santos, Talles, DEVELOPMENT AND USE OF ANATOMICAL AND
+PHYSIOLOGICAL PRIOR INFORMATION TO
+ESTIMATE ELECTRICAL IMPEDANCE
+TOMOGRAPHY IMAGE, 2019
+
+[2] Lombello, Christiane Bertachini, and Patricia Aparecida da Ana. Current Trends in Biomedical Engineering. Springer, 2023.
