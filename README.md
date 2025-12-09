@@ -117,6 +117,16 @@ In conjunction with this graph is an example of the two approximations in a figu
 
 ![sample signal](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/blob/main/figures/SampleFigure.png)
 
+In this sample we see the noisy signal in red, the least squares approximation in green, and the schur complement adjustment in blue. The approximation for the schur complement greatly improved on the approximation by the least squares method.
+
+Finally the live estimation took place. The live estimation origionally showed negative correlation between actual frequency and estimated frequency and optimation was requered to correct this error. Below is shown the estimation graphs at 118khz, 125 khz and 132khz.
+
+![118khz signal](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/blob/main/figures/118khz.png)
+
+![125khz signal](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/blob/main/figures/125khz.png)
+
+![132khz signal](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/blob/main/figures/132khz.png)
+
 ## Conclusion
 
 ## References
