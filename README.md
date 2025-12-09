@@ -69,13 +69,13 @@ To derive the formula the conditional covariance $\Sigma_{x|y}$ naturally arives
 The conditional joint density can be written of the form:
 
 $$
-	p(x,y) \alpha exp(-\frac{1}{2} \begin{pmatrix}z \\\\ d \end{pmatrix}^T \Sigma^{-1} \begin{pmatrix}z \\\\ d \end{pmatrix})
+	p(x,y) ~ \alpha ~ exp(-\frac{1}{2} \begin{pmatrix}z \\\\ d \end{pmatrix}^T \Sigma^{-1} \begin{pmatrix}z \\\\ d \end{pmatrix})
 $$
 
 where the variables are:
 
 $$
-
+	z = x - \mu_x, ~ d = y - \mu_y, ~ \Sigma^{-1} = \begin{pmatrix} M & N \\\\ N^T & P \end{pmatrix}
 $$
 
 
