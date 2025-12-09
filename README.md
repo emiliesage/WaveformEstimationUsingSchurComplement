@@ -111,6 +111,12 @@ First results of note are those of the simulations. Below are graphs of the metr
 
 ![signal metrics](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/blob/main/figures/TraininsStatistics.png) 
 
+The two significant metrics of note are the variation of the two models in the Amplitude, and in the Phase. For the amplitude, The schur complement method is a gaussian centered arround 0 error with a tight standard deviation, whereas the mean of the least squares method is at an error of -1. this is significant in showing that the amplitude is estimated with great error when only using the least squares method. for the phase the schur complement method is once again with a mean of 0 error with a small standard deviation, whereas the least squares method seems to be closer to a unifor distribution showing a uniform error in the simulation. 
+
+In conjunction with this graph is an example of the two approximations in a figure below:
+
+![sample signal](https://github.com/emiliesage/WaveformEstimationUsingSchurComplement/blob/main/figures/SampleFigure.png)
+
 ## Conclusion
 
 ## References
