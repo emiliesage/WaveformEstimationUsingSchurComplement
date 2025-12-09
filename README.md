@@ -78,6 +78,17 @@ $$
 	z = x - \mu_x, ~ d = y - \mu_y, ~ \Sigma^{-1} = \begin{pmatrix} M & N \\\\ N^T & P \end{pmatrix}
 $$
 
+The conditional probability after the multiplication is completed becomes:
+
+$$
+	p(x|y) ~ \alpha ~ exp(-\frac{1}{2}(z^TMz + 2z^TNd))
+$$
+
+By completinf the square we can reevaluate the equation to look like this
+
+$$
+	p(x|y) ~ \alpha ~ exp(\frac{1}{2}(z + M^{-1}Nd)^T M(z + M^{-1}Nd)) \times (constant in y)
+$$
 
 ## Results
 
